@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+    <head>
+        {# Required meta tags #}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        {% spaceless -%}
+            {# Add global stylesheets and scripts outside of any blocsk to add them to the helpers before any others assets are added #}
+            {# Useing the view helper to have cache buster functionality #}
+            {# Fontawesom CSS #}
+            {% do pimcore_head_link().appendStylesheet('https://use.fontawesome.com/releases/v5.0.4/css/all.css') %}
+            {# Bootstrap CSS #}
+            {% do pimcore_head_link().appendStylesheet('https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css',null,null,{integrity:"sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z",crossorigin:"anonymous"}) %}
+            {# Optional CSS #}
+            {% do pimcore_head_link().appendStylesheet(asset('static/css/main.css')) %}
+            {# jQuery first, then Popper.js, then Bootstrap JS #}
+            {% do pimcore_head_script().appendFile('https://code.jquery.com/jquery-3.5.1.slim.min.js',null,null,{ integrity:"sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj",crossorigin:"anonymous"}) %}
+            {% do pimcore_head_script().appendFile('https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js',null,null,{ integrity:"sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN",crossorigin:"anonymous"}) %}
+            {% do pimcore_head_script().appendFile('https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js',null,null,{ integrity:"sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV",crossorigin:"anonymous"}) %}
+            {# Optional JavaScript #}
+            {% do pimcore_head_script().appendFile(asset('static/js/main.js')) %}
+
+            {% if not document is defined or not document %}
+                {% set document = pimcore_document(1) %}
+            {% endif %}
+
+            {% if document is instanceof('\\Pimcore\\Model\\Document\\Link') %}
+                {# @var document \Pimcore\Model\Document\Link #}
+                {% set document = document.getObject() %}
+            {% endif %}
+
+            {# Title #}
+            {% if document.getTitle() is not empty %}
+                {% do pimcore_head_title().set(document.getTitle()) %}
+            {% endif %}
+            {% do pimcore_head_title().append('MeSelf') %}
+            {% do pimcore_head_title().setSeparator(' : ') %}
+
+            {% if document.getDescription() is not empty %}
+                {% do pimcore_head_meta().setDescription(document.getDescription()) %}
+            {% endif %}
+        {%- endspaceless %}
+
+        {# Using the deferred extension here to make sure this block is rendered after all helper calls #}
+        {% block layout_head_meta deferred %}
+            {{ pimcore_head_title() }}
+            {{ pimcore_head_meta() }}
+        {% endblock %}
+
+        {% block head_stylesheets deferred %}
+            {{ pimcore_head_link() }}
+        {% endblock %}
+    </head>
+
+  <body class="{{ body_bg_img_class ?? '' }}">
+    <header>
+      {% block header %}
+        {% include 'layouts/header.html.twig' %}
+      {% endblock %}
+    </header>
+
+    <main role="main">
+      {% block main %}
+        {% include 'layouts/main.html.twig' %}
+      {% endblock %}
+    </main>
+
+    <footer>
+      {% block footer %}
+        {% include 'layouts/footer.html.twig' %}
+      {% endblock %}
+    </footer>
+
+    {# output scripts added before #}
+    {% block head_scripts deferred %}
+        {{ pimcore_head_script() }}
+    {% endblock %}
+
+    {% block inlinescripts deferred %}
+        {{ pimcore_inline_script() }}
+    {% endblock %}
+  </body>
+</html>

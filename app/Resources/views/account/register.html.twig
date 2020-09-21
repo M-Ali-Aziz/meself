@@ -1,0 +1,47 @@
+{% extends 'layouts/layout.html.twig' %}
+
+{% block main %}
+
+    <div class="container">
+        <div class="my-5 d-flex justify-content-center">
+            <div class="col-12 col-md-6">
+
+
+                <h1 class="display-3 mb-3 font-weight-normal">Register</h1>
+
+                {% if error is defined %}
+                    <div class="alert alert-danger" role="alert">
+                      {{ error }}
+                    </div>
+                {% endif %}
+
+                <form name="registration_form" method="post">
+                    <div id="registration_form">
+                        <div class="form-group">
+                            <label for="registration_form_firstname" class="required">Firstname</label>
+                            <input type="text" id="registration_form_firstname" name="registration_form[firstname]" required="required" class="form-control" value="{{ (registration_form is defined) ? registration_form['firstname'] : '' }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="registration_form_lastname" class="required">Lastname</label>
+                            <input type="text" id="registration_form_lastname" name="registration_form[lastname]" required="required" class="form-control" value="{{ (registration_form is defined) ? registration_form['lastname'] : '' }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="registration_form_email" class="required">Email</label>
+                            <input type="email" id="registration_form_email" name="registration_form[email]" required="required" class="form-control" value="{{ (registration_form is defined) ? registration_form['email'] : '' }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="registration_form_password" class="required">Password</label>
+                            <input type="password" id="registration_form_password" name="registration_form[password]" required="required" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" id="registration_form__submit" name="registration_form[_submit]" class="btn btn-lg btn-block btn-success btn">Register</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
