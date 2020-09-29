@@ -23,10 +23,61 @@ class AccountController extends BaseController
      * @Route("/account/login", name="account-login")
      *
      * @param Request $request
+     * @param SessionInterface $session
+     *
+     * @return  Array|RedirectResponse
      */
-    public function loginAction(Request $request)
-    {
+    public function loginAction(
+        Request $request,
+        SessionInterface $session
+    ) {
+        // Start session
+        $session->start();
 
+        // Redirect member to index page if logged in
+        if ($session->get('email')) {
+            // Get member
+            $member = $this->getMember($session->get('email'));
+
+            if ($member) {
+                // Redirect to account-index
+                return $this->redirectToRoute('account-index');
+            }
+        }
+        // Check member login data and then redirect to index page
+        elseif ($request->get('email')) {
+            // Get member
+            $member = $this->getMember($request->get('email'));
+
+            if ($member) {
+                if ($request->get('password')) {
+                    // Check password
+                    if (password_verify($request->get('password'), $member->getPassword())) {
+
+                        // Set Session
+                        $session->set('firstname', $member->getFirstname());
+                        $session->set('lastname', $member->getLastname());
+                        $session->set('email', $request->get('email'));
+
+                        // Set response
+                        $response = $this->redirectToRoute('account-index');
+
+                        return $response;
+                    }
+                    else {
+                        $errors[] = 'Invalid email or password, Please check your credentials.';
+                    }
+                }
+            }
+            else {
+                $errors[] = 'Invalid email or password, Please check your credentials.';
+            }
+        }
+
+        return [
+            'errors' => ($errors) ? $errors : [],
+            'email' => ($email = $request->get('email')) ? $email : ''
+        ];
     }
 
     /**
@@ -43,8 +94,11 @@ class AccountController extends BaseController
         Request $request,
         SessionInterface $session
     ) {
-        $registrationFormData = $request->get('registration_form');
+        // Satrt session
+        $session->start();
 
+        // Get registration_form 
+        $registrationFormData = $request->get('registration_form');
 
         if ($registrationFormData) {
             // Get registration_form Data
@@ -58,7 +112,7 @@ class AccountController extends BaseController
             $memberExists = ($memberEmail->count() > 0) ? true : false;
 
             if ($memberExists == false) {
-                // Get Members DataObject ID 
+                // Get Members DataObject Folder ID 
                 $membersParentId = Frontend::getWebsiteConfig()->get('membersParentId');
 
                 // Register new member and save it to Members DataObject
@@ -74,9 +128,13 @@ class AccountController extends BaseController
                 ]);
                 $newMember->save();
 
-                $response = $this->redirectToRoute('account-index', [
-                    'email' => $email
-                ]);
+                // Set Session
+                $session->set('firstname', $firstname);
+                $session->set('lastname', $lastname);
+                $session->set('email', $email);
+
+                // Set response
+                $response = $this->redirectToRoute('account-index');
 
                 return $response;
             }
@@ -95,14 +153,20 @@ class AccountController extends BaseController
      * @Route("/account/index", name="account-index")
      *
      * @param Request $request
+     * @param SessionInterface $session
      */
-    public function indexAction (Request $request)
-    {
+    public function indexAction (
+        Request $request,
+        SessionInterface $session
+    ) {
+        // Satrt session
+        $session->start();
+
+        // Set variable
         $memberExists = false;
-        $email = $request->get('email');
 
         // Get member
-        $member = DataObject\Members::getByEmail($email, ['limit' => 1]);
+        $member = $this->getMember($session->get('email'));
 
         if ($member) {
             // Set variables
@@ -113,9 +177,47 @@ class AccountController extends BaseController
 
         // Set variables to view
         $this->view->memberExists = $memberExists;
-        $this->view->firstname = $firstname;
-        $this->view->lastname = $lastname;
-        $this->view->email = $email;
+        $this->view->firstname = ($firstname) ? $firstname : '';
+        $this->view->lastname = ($lastname) ? $lastname : '';
+        $this->view->email = ($email = $session->get('email')) ? $email : '';
+    }
+
+    /**
+     * Account Logout
+     *
+     * @Route("/account/logout", name="account-logout")
+     *
+     * @param Request $request
+     * @param SessionInterface $session
+     */
+    public function logoutAction (
+        Request $request,
+        SessionInterface $session
+    ) {
+        // Satrt session
+        $session->start();
+        // Destroy session
+        $session->invalidate();
+
+        // Redirect to home page
+        return $this->redirect('/');
+    }
+
+
+    /**
+     * Help function
+     * Get member
+     *
+     * @param String $email
+     *
+     * @return Object|null
+     */
+    private function getMember($email)
+    {
+        // Get member
+        $member = DataObject\Members::getByEmail($email, ['limit' => 1]);
+
+        return $member;
     }
 
 
