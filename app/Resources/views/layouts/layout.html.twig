@@ -12,12 +12,16 @@
             {% do pimcore_head_link().appendStylesheet('https://use.fontawesome.com/releases/v5.0.4/css/all.css') %}
             {# Bootstrap CSS #}
             {% do pimcore_head_link().appendStylesheet('https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css',null,null,{integrity:"sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z",crossorigin:"anonymous"}) %}
+            {# Google Font - DM Sans #}
+            {% do pimcore_head_link().appendStylesheet(asset('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap')) %}
             {# Optional CSS #}
             {% do pimcore_head_link().appendStylesheet(asset('static/css/main.css')) %}
             {# jQuery first, then Popper.js, then Bootstrap JS #}
             {% do pimcore_head_script().appendFile('https://code.jquery.com/jquery-3.5.1.slim.min.js',null,null,{ integrity:"sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj",crossorigin:"anonymous"}) %}
             {% do pimcore_head_script().appendFile('https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js',null,null,{ integrity:"sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN",crossorigin:"anonymous"}) %}
             {% do pimcore_head_script().appendFile('https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js',null,null,{ integrity:"sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV",crossorigin:"anonymous"}) %}
+            {# CKEditor #}
+            {% do pimcore_head_script().appendFile(asset('https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js')) %}
             {# Optional JavaScript #}
             {% do pimcore_head_script().appendFile(asset('static/js/main.js')) %}
 
@@ -34,7 +38,7 @@
             {% if document.getTitle() is not empty %}
                 {% do pimcore_head_title().set(document.getTitle()) %}
             {% endif %}
-            {% do pimcore_head_title().append('MeSelf') %}
+            {% do pimcore_head_title().append('MeetYourself') %}
             {% do pimcore_head_title().setSeparator(' : ') %}
 
             {% if document.getDescription() is not empty %}
@@ -53,32 +57,36 @@
         {% endblock %}
     </head>
 
-  <body class="{{ body_bg_img_class ?? '' }}">
-    <header>
-      {% block header %}
-        {% include 'layouts/header.html.twig' %}
-      {% endblock %}
-    </header>
+    <body class="{{ body_bg_img_class ?? '' }}">
+        {% block body %}
+            <div class="container mt-5">
+                <header>
+                  {% block header %}
+                    {% include 'include/header.html.twig' %}
+                  {% endblock %}
+                </header>
 
-    <main role="main">
-      {% block main %}
-        {% include 'layouts/main.html.twig' %}
-      {% endblock %}
-    </main>
+                <main role="main">
+                  {% block main %}
+                    {% include 'include/main.html.twig' %}
+                  {% endblock %}
+                </main>
 
-    <footer>
-      {% block footer %}
-        {% include 'layouts/footer.html.twig' %}
-      {% endblock %}
-    </footer>
+                <footer>
+                  {% block footer %}
+                    {% include 'include/footer.html.twig' %}
+                  {% endblock %}
+                </footer>
+            </div>
+        {% endblock %}
 
-    {# output scripts added before #}
-    {% block head_scripts deferred %}
-        {{ pimcore_head_script() }}
-    {% endblock %}
+            {# output scripts added before #}
+            {% block head_scripts deferred %}
+                {{ pimcore_head_script() }}
+            {% endblock %}
 
-    {% block inlinescripts deferred %}
-        {{ pimcore_inline_script() }}
-    {% endblock %}
-  </body>
+            {% block inlinescripts deferred %}
+                {{ pimcore_inline_script() }}
+            {% endblock %}
+    </body>
 </html>

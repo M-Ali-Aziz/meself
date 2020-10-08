@@ -1,0 +1,174 @@
+{% extends 'layouts/layout.html.twig' %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row">
+
+            <div class="col-3">
+                <div class="row">
+                    <a class="" href="/">
+                        <img id="logo" src="{{ asset('/static/images/logo.svg') }}" width="120" height="70" alt="logo" loading="lazy">
+                    </a>
+                </div>
+
+                <div class="row mt-5">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Start feed<span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Journal</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Tools</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Meet Lisa</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-9 mt-4">
+                <div class="row mb-3">
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="pills-all-tab" data-toggle="pill" href="#pills-all" role="tab" aria-controls="pills-all" aria-selected="true">All</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-notes-tab" data-toggle="pill" href="#pills-notes" role="tab" aria-controls="pills-notes" aria-selected="false">Notes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-experiences-tab" data-toggle="pill" href="#pills-experiences" role="tab" aria-controls="pills-experiences" aria-selected="false">Experiences</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-dreams-tab" data-toggle="pill" href="#pills-dreams" role="tab" aria-controls="pills-dreams" aria-selected="false">Dreams</a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav ml-auto mt-auto">
+                        <li class="nav-item mr-3">
+                            <!-- Add notes trigger modal -->
+                            <div data-toggle="modal" data-target="#exampleModalCenter">
+                                <img class="mt-auto" id="new-note-btn" src="{{ asset('/static/images/new_note_btn.svg') }}" width="30" height="30" alt="new-note-btn" loading="lazy">
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class="btn btn-dark btn-sm">
+                                <a class="text-white" href="{{ path('account-logout') }}">
+                                    <i class="fas fa-sign-out-alt fa-sm"></i>
+                                </a>
+                            </button>
+                        </li>
+                    </ul>
+
+
+                    <!-- Add notes Modal -->
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+
+                                <form name="addNewNote_form" method="post" action="/member/add-note" enctype="multipart/form-data">
+                                    <div class="modal-header">
+                                        <input type="hidden" name="email" value="{{ app.session.get('email') }}">
+                                        <fieldset class="form-group">
+                                            <legend class="modal-title">Add new</legend>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="noteType" id="radioNotes" value="Notes" checked>
+                                                <label class="form-check-label" for="radioNotes">Notes</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="noteType" id="radioExperiences" value="Experiences">
+                                                <label class="form-check-label" for="radioExperiences">Experiences</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="noteType" id="radioDreams" value="Dreams">
+                                                <label class="form-check-label" for="radioDreams">Dreams</label>
+                                            </div>
+                                        </fieldset>
+                                        <button type="button" class="close ml-0" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-header">
+                                        <fieldset class="form-group">
+                                            <legend class="modal-title">Emoji</legend>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="emoji" id="128525" value="&#128525">
+                                                <label class="form-check-label" for="128525">&#128525</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="emoji" id="128516" value="&#128516">
+                                                <label class="form-check-label" for="128516">&#128516</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="emoji" id="128528" value="&#128528" checked>
+                                                <label class="form-check-label" for="128528">&#128528</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="emoji" id="128553" value="&#128553">
+                                                <label class="form-check-label" for="128553">&#128553</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="emoji" id="128546" value="&#128546">
+                                                <label class="form-check-label" for="128546">&#128546</label>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+
+                                    <div class="modal-header">
+                                        <div class="form-group">
+                                            <legend class="modal-title">Date & time</legend>
+                                            <input class="form-control" type="datetime-local" value="{{ now|date('Y-m-d\\TH:i') }}" id="example-datetime-local-input" name="dateTime">
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-header">
+                                        <div class="form-group">
+                                            <legend class="modal-title">Image</legend>
+                                            <!-- Upload image input-->
+                                            <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white border shadow-sm">
+                                                <input id="upload" name="image" type="file" onchange="readURL(this);" class="form-control border-0" accept="image/*">
+                                                <label id="upload-label" for="upload" class="font-weight-light text-muted">Choose image</label>
+                                                <div class="input-group-append">
+                                                    <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose image</small></label>
+                                                </div>
+                                            </div>
+
+                                            <!-- Uploaded image area-->
+                                            <p class="font-italic text-center">The image uploaded will be rendered below.</p>
+                                            <div class="image-area mt-4"><img id="imageResult" src="#" alt="" class="img-fluid rounded shadow-sm mx-auto d-block"></div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-body">
+                                        <legend class="modal-title">Text</legend>
+                                        <div class="form-group">
+                                            <textarea id="editor" name="text">
+                                                {{ "<p></p>" }}
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" id="submit" name="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="row">
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-all" role="tabpanel" aria-labelledby="pills-all-tab">a...</div>
+                        <div class="tab-pane fade" id="pills-notes" role="tabpanel" aria-labelledby="pills-notes-tab">n...</div>
+                        <div class="tab-pane fade" id="pills-experiences" role="tabpanel" aria-labelledby="pills-experiences-tab">e...</div>
+                        <div class="tab-pane fade" id="pills-dreams" role="tabpanel" aria-labelledby="pills-dreams-tab">d...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
