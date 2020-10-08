@@ -40,8 +40,8 @@ class AccountController extends BaseController
             $member = $this->getMember($session->get('email'));
 
             if ($member) {
-                // Redirect to account-index
-                return $this->redirectToRoute('account-index');
+                // Redirect to member-index
+                return $this->redirectToRoute('member-index');
             }
         }
         // Check member login data and then redirect to index page
@@ -60,7 +60,7 @@ class AccountController extends BaseController
                         $session->set('email', $request->get('email'));
 
                         // Set response
-                        $response = $this->redirectToRoute('account-index');
+                        $response = $this->redirectToRoute('member-index');
 
                         return $response;
                     }
@@ -113,7 +113,7 @@ class AccountController extends BaseController
 
             if ($memberExists == false) {
                 // Get Members DataObject Folder ID 
-                $membersParentId = Frontend::getWebsiteConfig()->get('membersParentId');
+                $membersParentId = DataObject::getByPath("/Members")->getId();
 
                 // Register new member and save it to Members DataObject
                 $newMember = new DataObject\Members();
@@ -134,7 +134,7 @@ class AccountController extends BaseController
                 $session->set('email', $email);
 
                 // Set response
-                $response = $this->redirectToRoute('account-index');
+                $response = $this->redirectToRoute('member-index');
 
                 return $response;
             }
@@ -145,41 +145,6 @@ class AccountController extends BaseController
                 ];
             }
         }
-    }
-
-    /**
-     * Account Index page
-     *
-     * @Route("/account/index", name="account-index")
-     *
-     * @param Request $request
-     * @param SessionInterface $session
-     */
-    public function indexAction (
-        Request $request,
-        SessionInterface $session
-    ) {
-        // Satrt session
-        $session->start();
-
-        // Set variable
-        $memberExists = false;
-
-        // Get member
-        $member = $this->getMember($session->get('email'));
-
-        if ($member) {
-            // Set variables
-            $memberExists = true;
-            $firstname = $member->getFirstname();
-            $lastname = $member->getLastname();
-        }
-
-        // Set variables to view
-        $this->view->memberExists = $memberExists;
-        $this->view->firstname = ($firstname) ? $firstname : '';
-        $this->view->lastname = ($lastname) ? $lastname : '';
-        $this->view->email = ($email = $session->get('email')) ? $email : '';
     }
 
     /**
@@ -202,44 +167,4 @@ class AccountController extends BaseController
         // Redirect to home page
         return $this->redirect('/');
     }
-
-
-    /**
-     * Help function
-     * Get member
-     *
-     * @param String $email
-     *
-     * @return Object|null
-     */
-    private function getMember($email)
-    {
-        // Get member
-        $member = DataObject\Members::getByEmail($email, ['limit' => 1]);
-
-        return $member;
-    }
-
-
-
-
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
