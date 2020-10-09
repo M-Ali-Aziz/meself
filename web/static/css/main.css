@@ -14,6 +14,21 @@ body {
     font-family: 'DM Sans', sans-serif;
 }
 
+/* ------------------------------------ *
+ * Custom
+ * ------------------------------------ */
+.card-bg-orange {
+    background-color: #F8F1E8;
+}
+
+.card-bg-grey {
+    background-color: #F3F3F3;
+}
+
+.card-bg-blue {
+    background-color: #E6F3F3;
+}
+
 
 /* ------------------------------------ *
  * Image upload
@@ -59,4 +74,36 @@ body {
  * ------------------------------------ */
 .ck-editor__editable_inline {
     min-height: 200px;
+}
+
+/* ------------------------------------ *
+ * Bootstrap override
+ * ------------------------------------ */
+
+.card {
+    border: none;
+    border-radius: 10px;
+}
+@media (min-width: 576px) {
+    .card-columns {
+        column-count: 2;
+    }
+}
+
+@media (min-width: 768px) {
+    .card-columns {
+        column-count: 2;
+    }
+}
+
+@media (min-width: 992px) {
+    .card-columns {
+        column-count: 2;
+    }
+}
+
+@media (min-width: 1200px) {
+    .card-columns {
+        column-count: 2;
+    }
 }
