@@ -32,28 +32,25 @@ class MemberController extends BaseController
         // Satrt session
         $session->start();
 
-        // Set variable
-        $memberExists = false;
-
         // Get member
         $member = $this->getMember($session->get('email'));
 
         if ($member) {
-            // Set variables
-            $memberExists = true;
-            $firstname = $member->getFirstname();
-            $lastname = $member->getLastname();
+            // Get Journal list
+            $journalList = $this->getJournalList($member);
+        }
+        else{
+            // Set response
+            return $this->redirectToRoute('account-login');
         }
 
         // Set current Unix timestamp
         $now = time();
 
         // Set variables to view
-        $this->view->memberExists = $memberExists;
-        $this->view->firstname = ($firstname) ? $firstname : '';
-        $this->view->lastname = ($lastname) ? $lastname : '';
         $this->view->email = ($email = $session->get('email')) ? $email : '';
         $this->view->now = $now;
+        $this->view->journalList = $journalList;
     }
 
     /**
@@ -125,4 +122,37 @@ class MemberController extends BaseController
             return $this->redirectToRoute('account-login');
         }
     }
+
+    /** ---------------------------------------------------
+     * Help functions
+     * ---------------------------------------------------- */
+
+    /**
+     * Help function
+     * Get Journal List
+     *
+     * @param Object $member
+     *
+     * @return  Object|null
+     */
+    private function getJournalList($member)
+    {
+        $memberId = $member->getId();
+
+        $journalList = new DataObject\Journal\Listing();
+        $journalList->setCondition("member LIKE '%," . $memberId . ",%'");
+        $journalList->setOrderKey("o_modificationDate");
+        $journalList->setOrder("desc");
+
+        return ($journalList = $journalList->load()) ? $journalList : null;
+    }
+
+
+
+
+
+
+
+
+
 }
