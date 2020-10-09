@@ -1,0 +1,93 @@
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <form name="addNewNote_form" method="post" action="/member/add-note" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <input type="hidden" name="email" value="{{ app.session.get('email') }}">
+                    <fieldset class="form-group">
+                        <legend class="modal-title">Add new</legend>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="noteType" id="radioNotes" value="Notes" checked>
+                            <label class="form-check-label" for="radioNotes">Notes</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="noteType" id="radioExperiences" value="Experiences">
+                            <label class="form-check-label" for="radioExperiences">Experiences</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="noteType" id="radioDreams" value="Dreams">
+                            <label class="form-check-label" for="radioDreams">Dreams</label>
+                        </div>
+                    </fieldset>
+                    <button type="button" class="close ml-0" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-header">
+                    <fieldset class="form-group">
+                        <legend class="modal-title">Emoji</legend>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="emoji" id="128525" value="&#128525">
+                            <label class="form-check-label" for="128525">&#128525</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="emoji" id="128516" value="&#128516">
+                            <label class="form-check-label" for="128516">&#128516</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="emoji" id="128528" value="&#128528" checked>
+                            <label class="form-check-label" for="128528">&#128528</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="emoji" id="128553" value="&#128553">
+                            <label class="form-check-label" for="128553">&#128553</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="emoji" id="128546" value="&#128546">
+                            <label class="form-check-label" for="128546">&#128546</label>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="modal-header">
+                    <div class="form-group">
+                        <legend class="modal-title">Date & time</legend>
+                        <input class="form-control" type="datetime-local" value="{{ now|date('Y-m-d\\TH:i') }}" id="example-datetime-local-input" name="dateTime">
+                    </div>
+                </div>
+
+                <div class="modal-header">
+                    <div class="form-group">
+                        <legend class="modal-title">Image</legend>
+                        <!-- Upload image input-->
+                        <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white border shadow-sm">
+                            <input id="upload" name="image" type="file" onchange="readURL(this);" class="form-control border-0" accept="image/*">
+                            <label id="upload-label" for="upload" class="font-weight-light text-muted">Choose image</label>
+                            <div class="input-group-append">
+                                <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose image</small></label>
+                            </div>
+                        </div>
+
+                        <!-- Uploaded image area-->
+                        <p class="font-italic text-center">The image uploaded will be rendered below.</p>
+                        <div class="image-area mt-4"><img id="imageResult" src="#" alt="" class="img-fluid rounded shadow-sm mx-auto d-block"></div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <legend class="modal-title">Text</legend>
+                    <div class="form-group">
+                        <textarea id="editor" name="text">
+                            {{ "<p></p>" }}
+                        </textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" id="submit" name="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
