@@ -25,7 +25,7 @@
                             <img class="card-img my-3" src="{{ journal.image.path ~ journal.image.filename }}" alt="{{ journal.image.filename }}">
                         {% endif %}
                         {% if journal.text %}
-                            <div id="journal_text_view" class="ck ck-content ck-editor__editable ck-editor__editable_inline p-0">
+                            <div id="journal_text_view" class="ck ck-content ck-editor__editable_inline p-0">
                                 {{ journal.text | raw }}
                             </div>
 
