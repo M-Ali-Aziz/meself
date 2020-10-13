@@ -77,7 +77,7 @@ class MemberController extends BaseController
         $member = $this->getMember($email);
 
         if ($member) {
-            // Get image
+            // Get and save image
             if ($image) {
                 $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
                 $imageName = $originalFilename.'-'.uniqid().'.'.$image->guessExtension();
@@ -96,8 +96,11 @@ class MemberController extends BaseController
                 $image = Asset\Image::getByPath($parent.'/'.$imageName);
             }
 
-            // Get Journals DataObject Folder ID 
-            $journalParentId = DataObject::getByPath("/Journals")->getId();
+            // Set Journals Parent Folder
+            $path = '/Journals' . '/' . $email;
+            $journalParentFolder = DataObject\Service::createFolderByPath($path);
+            // Get Journals Parent Id
+            $journalParentId = $journalParentFolder->getId();
 
             // Register new note and save it to Journal DataObject
             $newJournal = new DataObject\Journal();

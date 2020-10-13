@@ -43,6 +43,13 @@ class AccountController extends BaseController
                 // Redirect to member-index
                 return $this->redirectToRoute('member-index');
             }
+            else {
+                // Destroy session
+                $session->invalidate();
+
+                // Redirect to account-login
+                return $this->redirectToRoute('account-login');
+            }
         }
         // Check member login data and then redirect to index page
         elseif ($request->get('email')) {
@@ -112,13 +119,16 @@ class AccountController extends BaseController
             $memberExists = ($memberEmail->count() > 0) ? true : false;
 
             if ($memberExists == false) {
-                // Get Members DataObject Folder ID 
-                $membersParentId = DataObject::getByPath("/Members")->getId();
+                // Set Member Parent Folder
+                $path = '/Members' . '/' . date('Y');
+                $memberParentFolder = DataObject\Service::createFolderByPath($path);
+                // Get Member Parent Id
+                $memberParentId = $memberParentFolder->getId();
 
                 // Register new member and save it to Members DataObject
                 $newMember = new DataObject\Members();
                 $newMember->setValues([
-                    'o_parentId' => $membersParentId,
+                    'o_parentId' => $memberParentId,
                     'o_key' => $email,
                     'o_published' => true,
                     'firstname' => $firstname,

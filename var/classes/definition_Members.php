@@ -8,6 +8,7 @@
 Fields Summary: 
 - firstname [firstname]
 - lastname [lastname]
+- creationDateTime [datetime]
 - email [email]
 - password [password]
 */ 
@@ -18,7 +19,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
    'name' => 'Members',
    'description' => '',
    'creationDate' => 0,
-   'modificationDate' => 1600951564,
+   'modificationDate' => 1602507152,
    'userOwner' => 2,
    'userModification' => 2,
    'parentClass' => '',
@@ -144,6 +145,30 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
                  'visibleSearch' => false,
                  'defaultValueGenerator' => '',
               )),
+              2 => 
+              Pimcore\Model\DataObject\ClassDefinition\Data\Datetime::__set_state(array(
+                 'fieldtype' => 'datetime',
+                 'queryColumnType' => 'datetime',
+                 'columnType' => 'datetime',
+                 'phpdocType' => '\\Carbon\\Carbon',
+                 'defaultValue' => NULL,
+                 'useCurrentDate' => true,
+                 'name' => 'creationDateTime',
+                 'title' => 'Creation Date and Time',
+                 'tooltip' => '',
+                 'mandatory' => false,
+                 'noteditable' => true,
+                 'index' => false,
+                 'locked' => false,
+                 'style' => '',
+                 'permissions' => NULL,
+                 'datatype' => 'data',
+                 'relationType' => false,
+                 'invisible' => false,
+                 'visibleGridView' => false,
+                 'visibleSearch' => false,
+                 'defaultValueGenerator' => '',
+              )),
             ),
              'locked' => false,
           )),
@@ -208,7 +233,7 @@ return Pimcore\Model\DataObject\ClassDefinition::__set_state(array(
                  'mandatory' => false,
                  'noteditable' => false,
                  'index' => false,
-                 'locked' => NULL,
+                 'locked' => false,
                  'style' => '',
                  'permissions' => NULL,
                  'datatype' => 'data',
