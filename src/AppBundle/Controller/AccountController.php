@@ -171,8 +171,10 @@ class AccountController extends BaseController
     ) {
         // Satrt session
         $session->start();
-        // Destroy session
-        $session->invalidate();
+        // Remove session values
+        $session->remove('firstname');
+        $session->remove('lastname');
+        $session->remove('email');
 
         // Redirect to home page
         return $this->redirect('/');

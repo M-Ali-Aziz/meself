@@ -72,7 +72,7 @@ body {
 /* ------------------------------------ *
  * CKEditor
  * ------------------------------------ */
-.ck-editor__editable_inline {
+.ck-editor__main .ck-editor__editable_inline {
     min-height: 200px;
 }
 
@@ -84,6 +84,7 @@ body {
     border: none;
     border-radius: 10px;
 }
+
 @media (min-width: 576px) {
     .card-columns {
         column-count: 2;

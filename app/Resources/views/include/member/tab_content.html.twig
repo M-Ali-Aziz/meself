@@ -1,14 +1,8 @@
-{{ dump(journalList) }}
-
-
 {% if journalList %}
     {# All #}
     <div class="tab-pane fade show active" id="pills-all" role="tabpanel" aria-labelledby="pills-all-tab">
         <div class="card-columns">
             {% for journal in journalList %}
-                {{ dump(journal.text) }}
-                {{ dump(journal.text | raw) }}
-
                 <div class="card mb-4 {{ random(['card-bg-orange', 'card-bg-grey', 'card-bg-blue']) }}">
                     {% if journal.emoji %}
                         <p class="float-right pt-1 pr-1">{{ journal.emoji }}</p>
@@ -19,13 +13,13 @@
                             <div class="clearfix"></div>
                         {% endif %}
                         {% if journal.noteType %}
-                            <span>Note</span>
+                            <span>{{ journal.noteType }}</span>
                         {% endif %}
                         {% if journal.image %}
                             <img class="card-img my-3" src="{{ journal.image.path ~ journal.image.filename }}" alt="{{ journal.image.filename }}">
                         {% endif %}
                         {% if journal.text %}
-                            <div id="journal_text_view" class="ck ck-content ck-editor__editable_inline p-0">
+                            <div class="ck ck-content ck-editor__editable_inline p-0">
                                 {{ journal.text | raw }}
                             </div>
                         {% endif %}
@@ -36,13 +30,94 @@
     </div>
 
     {# Notes #}
-    <div class="tab-pane fade" id="pills-notes" role="tabpanel" aria-labelledby="pills-notes-tab">n...</div>
+    <div class="tab-pane fade" id="pills-notes" role="tabpanel" aria-labelledby="pills-notes-tab">
+        <div class="card-columns">
+            {% for journal in journalList|filter(journal => journal.noteType == 'Note') %}
+                <div class="card mb-4 {{ random(['card-bg-orange', 'card-bg-grey', 'card-bg-blue']) }}">
+                    {% if journal.emoji %}
+                        <p class="float-right pt-1 pr-1">{{ journal.emoji }}</p>
+                    {% endif %}
+                    <div class="card-body">
+                        {% if journal.dateTime %}
+                            <span>{{ journal.dateTime|date("l\\, F d") }}</span>
+                            <div class="clearfix"></div>
+                        {% endif %}
+                        {% if journal.noteType %}
+                            <span>{{ journal.noteType }}</span>
+                        {% endif %}
+                        {% if journal.image %}
+                            <img class="card-img my-3" src="{{ journal.image.path ~ journal.image.filename }}" alt="{{ journal.image.filename }}">
+                        {% endif %}
+                        {% if journal.text %}
+                            <div class="ck ck-content ck-editor__editable_inline p-0">
+                                {{ journal.text | raw }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 
     {# Experiences #}
-    <div class="tab-pane fade" id="pills-experiences" role="tabpanel" aria-labelledby="pills-experiences-tab">e...</div>
+    <div class="tab-pane fade" id="pills-experiences" role="tabpanel" aria-labelledby="pills-experiences-tab">
+        <div class="card-columns">
+            {% for journal in journalList|filter(journal => journal.noteType == 'Experience') %}
+                <div class="card mb-4 {{ random(['card-bg-orange', 'card-bg-grey', 'card-bg-blue']) }}">
+                    {% if journal.emoji %}
+                        <p class="float-right pt-1 pr-1">{{ journal.emoji }}</p>
+                    {% endif %}
+                    <div class="card-body">
+                        {% if journal.dateTime %}
+                            <span>{{ journal.dateTime|date("l\\, F d") }}</span>
+                            <div class="clearfix"></div>
+                        {% endif %}
+                        {% if journal.noteType %}
+                            <span>{{ journal.noteType }}</span>
+                        {% endif %}
+                        {% if journal.image %}
+                            <img class="card-img my-3" src="{{ journal.image.path ~ journal.image.filename }}" alt="{{ journal.image.filename }}">
+                        {% endif %}
+                        {% if journal.text %}
+                            <div class="ck ck-content ck-editor__editable_inline p-0">
+                                {{ journal.text | raw }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 
     {# Dreams #}
-    <div class="tab-pane fade" id="pills-dreams" role="tabpanel" aria-labelledby="pills-dreams-tab">d...</div>
+    <div class="tab-pane fade" id="pills-dreams" role="tabpanel" aria-labelledby="pills-dreams-tab">
+        <div class="card-columns">
+            {% for journal in journalList|filter(journal => journal.noteType == 'Dream') %}
+                <div class="card mb-4 {{ random(['card-bg-orange', 'card-bg-grey', 'card-bg-blue']) }}">
+                    {% if journal.emoji %}
+                        <p class="float-right pt-1 pr-1">{{ journal.emoji }}</p>
+                    {% endif %}
+                    <div class="card-body">
+                        {% if journal.dateTime %}
+                            <span>{{ journal.dateTime|date("l\\, F d") }}</span>
+                            <div class="clearfix"></div>
+                        {% endif %}
+                        {% if journal.noteType %}
+                            <span>{{ journal.noteType }}</span>
+                        {% endif %}
+                        {% if journal.image %}
+                            <img class="card-img my-3" src="{{ journal.image.path ~ journal.image.filename }}" alt="{{ journal.image.filename }}">
+                        {% endif %}
+                        {% if journal.text %}
+                            <div class="ck ck-content ck-editor__editable_inline p-0">
+                                {{ journal.text | raw }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% else %}
     <p>No Journal was found! Add Journal by clicking the plus button :)</p>
 {% endif %}

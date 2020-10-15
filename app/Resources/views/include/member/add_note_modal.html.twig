@@ -8,16 +8,16 @@
                     <fieldset class="form-group">
                         <legend class="modal-title">Add new</legend>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="noteType" id="radioNotes" value="Notes" checked>
-                            <label class="form-check-label" for="radioNotes">Notes</label>
+                            <input class="form-check-input" type="radio" name="noteType" id="radioNotes" value="Note" checked>
+                            <label class="form-check-label" for="radioNotes">Note</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="noteType" id="radioExperiences" value="Experiences">
-                            <label class="form-check-label" for="radioExperiences">Experiences</label>
+                            <input class="form-check-input" type="radio" name="noteType" id="radioExperiences" value="Experience">
+                            <label class="form-check-label" for="radioExperiences">Experience</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="noteType" id="radioDreams" value="Dreams">
-                            <label class="form-check-label" for="radioDreams">Dreams</label>
+                            <input class="form-check-input" type="radio" name="noteType" id="radioDreams" value="Dream">
+                            <label class="form-check-label" for="radioDreams">Dream</label>
                         </div>
                     </fieldset>
                     <button type="button" class="close ml-0" data-dismiss="modal" aria-label="Close">
@@ -53,7 +53,7 @@
                 <div class="modal-header">
                     <div class="form-group">
                         <legend class="modal-title">Date & time</legend>
-                        <input class="form-control" type="datetime-local" value="{{ now|date('Y-m-d\\TH:i') }}" id="example-datetime-local-input" name="dateTime">
+                        <input class="form-control" type="datetime-local" value="{{ now|date('Y-m-d\\TH:i') }}" id="date-time-picker" name="dateTime">
                     </div>
                 </div>
 
