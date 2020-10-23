@@ -4,9 +4,6 @@
         <div class="card-columns">
             {% for journal in journalList %}
                 <div class="card mb-4 {{ random(['card-bg-orange', 'card-bg-grey', 'card-bg-blue']) }}">
-                    {% if journal.emoji %}
-                        <p class="float-right pt-1 pr-1">{{ journal.emoji }}</p>
-                    {% endif %}
                     <div class="card-body">
                         {% if journal.dateTime %}
                             <span>{{ journal.dateTime|date("l\\, F d") }}</span>
@@ -24,6 +21,9 @@
                             </div>
                         {% endif %}
                     </div>
+                    {% if journal.emoji %}
+                        <p class="float-right h4 mb-0 pr-1">{{ journal.emoji }}</p>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
@@ -34,9 +34,6 @@
         <div class="card-columns">
             {% for journal in journalList|filter(journal => journal.noteType == 'Note') %}
                 <div class="card mb-4 {{ random(['card-bg-orange', 'card-bg-grey', 'card-bg-blue']) }}">
-                    {% if journal.emoji %}
-                        <p class="float-right pt-1 pr-1">{{ journal.emoji }}</p>
-                    {% endif %}
                     <div class="card-body">
                         {% if journal.dateTime %}
                             <span>{{ journal.dateTime|date("l\\, F d") }}</span>
@@ -54,6 +51,9 @@
                             </div>
                         {% endif %}
                     </div>
+                    {% if journal.emoji %}
+                        <p class="float-right h4 mb-0 pr-1">{{ journal.emoji }}</p>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
@@ -64,9 +64,6 @@
         <div class="card-columns">
             {% for journal in journalList|filter(journal => journal.noteType == 'Experience') %}
                 <div class="card mb-4 {{ random(['card-bg-orange', 'card-bg-grey', 'card-bg-blue']) }}">
-                    {% if journal.emoji %}
-                        <p class="float-right pt-1 pr-1">{{ journal.emoji }}</p>
-                    {% endif %}
                     <div class="card-body">
                         {% if journal.dateTime %}
                             <span>{{ journal.dateTime|date("l\\, F d") }}</span>
@@ -84,6 +81,9 @@
                             </div>
                         {% endif %}
                     </div>
+                    {% if journal.emoji %}
+                        <p class="float-right h4 mb-0 pr-1">{{ journal.emoji }}</p>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
@@ -94,9 +94,6 @@
         <div class="card-columns">
             {% for journal in journalList|filter(journal => journal.noteType == 'Dream') %}
                 <div class="card mb-4 {{ random(['card-bg-orange', 'card-bg-grey', 'card-bg-blue']) }}">
-                    {% if journal.emoji %}
-                        <p class="float-right pt-1 pr-1">{{ journal.emoji }}</p>
-                    {% endif %}
                     <div class="card-body">
                         {% if journal.dateTime %}
                             <span>{{ journal.dateTime|date("l\\, F d") }}</span>
@@ -114,6 +111,9 @@
                             </div>
                         {% endif %}
                     </div>
+                    {% if journal.emoji %}
+                        <p class="float-right h4 mb-0 pr-1">{{ journal.emoji }}</p>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>

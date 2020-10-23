@@ -13,20 +13,22 @@
 
                 {# Navigation left #}
                 <div class="row mt-5">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Start feed<span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Journal</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Tools</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Meet Lisa</a>
-                        </li>
-                    </ul>
+                    <nav class="navbar-light">
+                        <ul class="navbar-nav flex-column">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#">Tools</a>
+                            </li>
+                            <li class="nav-item mb-3">
+                                <a class="nav-link" href="#">Meet Lisa</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('account-logout') }}">Logout</a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
 
@@ -49,18 +51,11 @@
                     </ul>
 
                     <ul class="nav ml-auto mt-auto">
-                        <li class="nav-item mr-3">
+                        <li class="nav-item">
                             {# Add notes trigger modal #}
                             <div data-toggle="modal" data-target="#exampleModalCenter">
                                 <img class="mt-auto" id="new-note-btn" src="{{ asset('/static/images/new_note_btn.svg') }}" width="30" height="30" alt="new-note-btn" loading="lazy">
                             </div>
-                        </li>
-                        <li class="nav-item">
-                            <button type="submit" class="btn btn-dark btn-sm">
-                                <a class="text-white" href="{{ path('account-logout') }}">
-                                    <i class="fas fa-sign-out-alt fa-sm"></i>
-                                </a>
-                            </button>
                         </li>
                     </ul>
 
@@ -70,10 +65,8 @@
 
                 <div class="row mt-4">
                     <div class="tab-content" id="pills-tabContent">
-
                         {# Include Navbar - tab_content #}
                         {% include '/include/member/tab_content.html.twig' %}
-
                     </div>
                 </div>
             </div>
