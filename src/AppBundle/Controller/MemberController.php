@@ -18,7 +18,7 @@ use Pimcore\Model\Asset;
 class MemberController extends BaseController
 {
     /**
-     * Account Index page
+     * Member Index page
      *
      * @Route("/member/index", name="member-index")
      *
@@ -35,9 +35,33 @@ class MemberController extends BaseController
         // Get member
         $member = $this->getMember($session->get('email'));
 
+        if (!$member) {
+            // Set response
+            return $this->redirectToRoute('account-login');
+        }
+    }
+
+    /**
+     * Member Diary page
+     *
+     * @Route("/member/diary", name="member-diary")
+     *
+     * @param Request $request
+     * @param SessionInterface $session
+     */
+    public function diaryAction (
+        Request $request,
+        SessionInterface $session
+    ) {
+        // Satrt session
+        $session->start();
+
+        // Get member
+        $member = $this->getMember($session->get('email'));
+
         if ($member) {
-            // Get Journal list
-            $journalList = $this->getJournalList($member);
+            // Get Diary list
+            $diaryList = $this->getDiaryList($member);
         }
         else{
             // Set response
@@ -48,9 +72,8 @@ class MemberController extends BaseController
         $now = time();
 
         // Set variables to view
-        $this->view->email = ($email = $session->get('email')) ? $email : '';
         $this->view->now = $now;
-        $this->view->journalList = $journalList;
+        $this->view->diaryList = $diaryList;
     }
 
     /**
@@ -83,7 +106,7 @@ class MemberController extends BaseController
                 $imageName = $originalFilename.'-'.uniqid().'.'.$image->guessExtension();
                 $imageRealPath = $image->getRealPath();
                 // Set Parent (Asset Folder)
-                $parent = Asset::getByPath("/Journal");
+                $parent = Asset::getByPath("/Diary");
 
                 // Creating and saving new asset
                 $newAsset = new Asset();
@@ -96,16 +119,16 @@ class MemberController extends BaseController
                 $image = Asset\Image::getByPath($parent.'/'.$imageName);
             }
 
-            // Set Journals Parent Folder
-            $path = '/Journals' . '/' . $email;
-            $journalParentFolder = DataObject\Service::createFolderByPath($path);
-            // Get Journals Parent Id
-            $journalParentId = $journalParentFolder->getId();
+            // Set Diarys Parent Folder
+            $path = '/Diarys' . '/' . $email;
+            $diaryParentFolder = DataObject\Service::createFolderByPath($path);
+            // Get Diarys Parent Id
+            $dairyParentId = $diaryParentFolder->getId();
 
-            // Register new note and save it to Journal DataObject
-            $newJournal = new DataObject\Journal();
-            $newJournal->setValues([
-                'o_parentId' => $journalParentId,
+            // Register new note and save it to Diary DataObject
+            $newDiary = new DataObject\Diary();
+            $newDiary->setValues([
+                'o_parentId' => $dairyParentId,
                 'o_key' => ($email . time()),
                 'o_published' => true,
                 'noteType' => $noteType,
@@ -115,10 +138,10 @@ class MemberController extends BaseController
                 'text' => $text,
                 'member' => [$member]
             ]);
-            $newJournal->save();
+            $newDiary->save();
 
             // Set response
-            return $this->redirectToRoute('member-index');
+            return $this->redirectToRoute('member-diary');
         }
         else {
             // Set response
@@ -132,22 +155,22 @@ class MemberController extends BaseController
 
     /**
      * Help function
-     * Get Journal List
+     * Get Diary List
      *
      * @param Object $member
      *
      * @return  Object|null
      */
-    private function getJournalList($member)
+    private function getDiaryList($member)
     {
         $memberId = $member->getId();
 
-        $journalList = new DataObject\Journal\Listing();
-        $journalList->setCondition("member LIKE '%," . $memberId . ",%'");
-        $journalList->setOrderKey("o_modificationDate");
-        $journalList->setOrder("desc");
+        $diaryList = new DataObject\Diary\Listing();
+        $diaryList->setCondition("member LIKE '%," . $memberId . ",%'");
+        $diaryList->setOrderKey("o_modificationDate");
+        $diaryList->setOrder("desc");
 
-        return ($journalList = $journalList->load()) ? $journalList : null;
+        return $diaryList->load() ?? null;
     }
 
 

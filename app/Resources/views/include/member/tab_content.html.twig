@@ -1,28 +1,28 @@
-{% if journalList %}
+{% if diaryList %}
     {# All #}
     <div class="tab-pane fade show active" id="pills-all" role="tabpanel" aria-labelledby="pills-all-tab">
         <div class="card-columns">
-            {% for journal in journalList %}
+            {% for diary in diaryList %}
                 <div class="card mb-4 {{ random(['card-bg-orange', 'card-bg-grey', 'card-bg-blue']) }}">
                     <div class="card-body">
-                        {% if journal.dateTime %}
-                            <span>{{ journal.dateTime|date("l\\, F d") }}</span>
+                        {% if diary.dateTime %}
+                            <span>{{ diary.dateTime|date("l\\, F d") }}</span>
                             <div class="clearfix"></div>
                         {% endif %}
-                        {% if journal.noteType %}
-                            <span>{{ journal.noteType }}</span>
+                        {% if diary.noteType %}
+                            <span>{{ diary.noteType }}</span>
                         {% endif %}
-                        {% if journal.image %}
-                            <img class="card-img my-3" src="{{ journal.image.path ~ journal.image.filename }}" alt="{{ journal.image.filename }}">
+                        {% if diary.image %}
+                            <img class="card-img my-3" src="{{ diary.image.path ~ diary.image.filename }}" alt="{{ diary.image.filename }}">
                         {% endif %}
-                        {% if journal.text %}
+                        {% if diary.text %}
                             <div class="ck ck-content ck-editor__editable_inline p-0">
-                                {{ journal.text | raw }}
+                                {{ diary.text | raw }}
                             </div>
                         {% endif %}
                     </div>
-                    {% if journal.emoji %}
-                        <p class="float-right h4 mb-0 pr-1">{{ journal.emoji }}</p>
+                    {% if diary.emoji %}
+                        <p class="float-right h4 mb-0 pr-1">{{ diary.emoji }}</p>
                     {% endif %}
                 </div>
             {% endfor %}
@@ -32,27 +32,27 @@
     {# Notes #}
     <div class="tab-pane fade" id="pills-notes" role="tabpanel" aria-labelledby="pills-notes-tab">
         <div class="card-columns">
-            {% for journal in journalList|filter(journal => journal.noteType == 'Note') %}
+            {% for diary in diaryList|filter(diary => diary.noteType == 'Note') %}
                 <div class="card mb-4 {{ random(['card-bg-orange', 'card-bg-grey', 'card-bg-blue']) }}">
                     <div class="card-body">
-                        {% if journal.dateTime %}
-                            <span>{{ journal.dateTime|date("l\\, F d") }}</span>
+                        {% if diary.dateTime %}
+                            <span>{{ diary.dateTime|date("l\\, F d") }}</span>
                             <div class="clearfix"></div>
                         {% endif %}
-                        {% if journal.noteType %}
-                            <span>{{ journal.noteType }}</span>
+                        {% if diary.noteType %}
+                            <span>{{ diary.noteType }}</span>
                         {% endif %}
-                        {% if journal.image %}
-                            <img class="card-img my-3" src="{{ journal.image.path ~ journal.image.filename }}" alt="{{ journal.image.filename }}">
+                        {% if diary.image %}
+                            <img class="card-img my-3" src="{{ diary.image.path ~ diary.image.filename }}" alt="{{ diary.image.filename }}">
                         {% endif %}
-                        {% if journal.text %}
+                        {% if diary.text %}
                             <div class="ck ck-content ck-editor__editable_inline p-0">
-                                {{ journal.text | raw }}
+                                {{ diary.text | raw }}
                             </div>
                         {% endif %}
                     </div>
-                    {% if journal.emoji %}
-                        <p class="float-right h4 mb-0 pr-1">{{ journal.emoji }}</p>
+                    {% if diary.emoji %}
+                        <p class="float-right h4 mb-0 pr-1">{{ diary.emoji }}</p>
                     {% endif %}
                 </div>
             {% endfor %}
@@ -62,27 +62,27 @@
     {# Experiences #}
     <div class="tab-pane fade" id="pills-experiences" role="tabpanel" aria-labelledby="pills-experiences-tab">
         <div class="card-columns">
-            {% for journal in journalList|filter(journal => journal.noteType == 'Experience') %}
+            {% for diary in diaryList|filter(diary => diary.noteType == 'Experience') %}
                 <div class="card mb-4 {{ random(['card-bg-orange', 'card-bg-grey', 'card-bg-blue']) }}">
                     <div class="card-body">
-                        {% if journal.dateTime %}
-                            <span>{{ journal.dateTime|date("l\\, F d") }}</span>
+                        {% if diary.dateTime %}
+                            <span>{{ diary.dateTime|date("l\\, F d") }}</span>
                             <div class="clearfix"></div>
                         {% endif %}
-                        {% if journal.noteType %}
-                            <span>{{ journal.noteType }}</span>
+                        {% if diary.noteType %}
+                            <span>{{ diary.noteType }}</span>
                         {% endif %}
-                        {% if journal.image %}
-                            <img class="card-img my-3" src="{{ journal.image.path ~ journal.image.filename }}" alt="{{ journal.image.filename }}">
+                        {% if diary.image %}
+                            <img class="card-img my-3" src="{{ diary.image.path ~ diary.image.filename }}" alt="{{ diary.image.filename }}">
                         {% endif %}
-                        {% if journal.text %}
+                        {% if diary.text %}
                             <div class="ck ck-content ck-editor__editable_inline p-0">
-                                {{ journal.text | raw }}
+                                {{ diary.text | raw }}
                             </div>
                         {% endif %}
                     </div>
-                    {% if journal.emoji %}
-                        <p class="float-right h4 mb-0 pr-1">{{ journal.emoji }}</p>
+                    {% if diary.emoji %}
+                        <p class="float-right h4 mb-0 pr-1">{{ diary.emoji }}</p>
                     {% endif %}
                 </div>
             {% endfor %}
@@ -92,32 +92,32 @@
     {# Dreams #}
     <div class="tab-pane fade" id="pills-dreams" role="tabpanel" aria-labelledby="pills-dreams-tab">
         <div class="card-columns">
-            {% for journal in journalList|filter(journal => journal.noteType == 'Dream') %}
+            {% for diary in diaryList|filter(diary => diary.noteType == 'Dream') %}
                 <div class="card mb-4 {{ random(['card-bg-orange', 'card-bg-grey', 'card-bg-blue']) }}">
                     <div class="card-body">
-                        {% if journal.dateTime %}
-                            <span>{{ journal.dateTime|date("l\\, F d") }}</span>
+                        {% if diary.dateTime %}
+                            <span>{{ diary.dateTime|date("l\\, F d") }}</span>
                             <div class="clearfix"></div>
                         {% endif %}
-                        {% if journal.noteType %}
-                            <span>{{ journal.noteType }}</span>
+                        {% if diary.noteType %}
+                            <span>{{ diary.noteType }}</span>
                         {% endif %}
-                        {% if journal.image %}
-                            <img class="card-img my-3" src="{{ journal.image.path ~ journal.image.filename }}" alt="{{ journal.image.filename }}">
+                        {% if diary.image %}
+                            <img class="card-img my-3" src="{{ diary.image.path ~ diary.image.filename }}" alt="{{ diary.image.filename }}">
                         {% endif %}
-                        {% if journal.text %}
+                        {% if diary.text %}
                             <div class="ck ck-content ck-editor__editable_inline p-0">
-                                {{ journal.text | raw }}
+                                {{ diary.text | raw }}
                             </div>
                         {% endif %}
                     </div>
-                    {% if journal.emoji %}
-                        <p class="float-right h4 mb-0 pr-1">{{ journal.emoji }}</p>
+                    {% if diary.emoji %}
+                        <p class="float-right h4 mb-0 pr-1">{{ diary.emoji }}</p>
                     {% endif %}
                 </div>
             {% endfor %}
         </div>
     </div>
 {% else %}
-    <p>No Journal was found! Add Journal by clicking the plus button :)</p>
+    <p>No Diary was found! Add Diary by clicking the plus button :)</p>
 {% endif %}
